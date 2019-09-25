@@ -65,6 +65,15 @@ export default {
           .then(({ data }) => {
             this.setRepos(data.items);
           })
+          .catch((err) => {
+            this.setSnackbar({
+              show: true,
+              message: err.response.data.message || 'Erro ao buscar repositório',
+              color: 'red darken-1',
+              bottom: true,
+              icon: 'la-warning',
+            });
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -73,6 +82,7 @@ export default {
     onClear() {
       this.search = '';
     },
+    ...mapActions('base', ['setSnackbar']),
     ...mapActions('github', ['setRepos']),
   },
   computed: {
