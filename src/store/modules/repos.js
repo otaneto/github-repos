@@ -1,21 +1,27 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+const defaultState = {
+  repos: [],
+};
 
-Vue.use(Vuex);
+const mutations = {
+  SET_REPOS: (state, payload) => {
+    Object.assign(state, { repos: payload });
+  },
+};
 
-export default new Vuex.Store({
-  state: {
-    repos: [],
+const actions = {
+  setRepos: ({ commit }, payload) => {
+    commit('SET_REPOS', payload);
   },
-  mutations: {
-    SET_REPOS: (state, payload) => {
-      Object.assign(state, { repos: payload });
-    },
-  },
-  actions: {
-    setRepos: ({ commit }, payload) => {
-      commit('SET_REPOS', payload);
-    },
-  },
-  getters: state => state.repos,
-});
+};
+
+const getters = {
+  repos: state => state.repos,
+};
+
+export default {
+  actions,
+  getters,
+  mutations,
+  namespaced: true,
+  state: defaultState,
+};
