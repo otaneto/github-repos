@@ -14,16 +14,18 @@
 
     <v-content>
       <router-view />
+      <snackbar />
     </v-content>
   </v-app>
 </template>
 
 <script>
+import Snackbar from '@/components/Snackbar.vue';
 
 export default {
   name: 'App',
-  data: () => ({
-    //
-  }),
+  components: {
+    Snackbar,
+  },
 };
 </script>
