@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-layout column justify-center align-center>
-      <v-card width="50%" height="550">
+      <v-card :width="$vuetify.breakpoint.mdAndUp ? '70%' : '95%'" height="550">
         <v-card-text>
           <v-text-field
             v-model="search"
@@ -10,35 +10,18 @@
             @click:append="onClear"
             :loading="loading"
             label="Busca"
-            placeholder="Digite o nome do repositório..."
+            placeholder="Procurar repositório..."
           />
-          <v-container
-            v-if="repos.length === 0 && search.length < 3"
-            class="initial-content"
-            fill-height
-          >
-            <v-layout
-              column
-              align-center
-              justify-center
-            >
-              <img
-                width="200" src="@/assets/images/octocat.png"
-                alt="Logo Github"
-              />
-              <span class="mt-3 headline text-center">
-                Busque seus repositórios favoritos do Github digitando o nome no campo acima.
-              </span>
-            </v-layout>
-          </v-container>
-          
+
+          <initial-content v-if="repos.length === 0 && search.length < 3" />
+
           <searching-content v-if="loading" />
-          
+
           <div
             :class="{'cards-container': repos.length >= 3}"
             v-if="repos.length > 0 && !loading"
           >
-            <repository-card v-for="repo in repos" :key="repo.id" />
+            <repository-card v-for="repo in repos" :key="repo.id" :repo="repo" />
           </div>
 
           <not-found v-else-if="repos.length === 0 && search.length > 3 && !loading" />
@@ -50,21 +33,23 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import githubService from '@/services/github-service';
-import RepositoryCard from '@/components/RepositoryCard.vue';
+import InitialContent from '@/components/InitialContent.vue';
 import NotFound from '@/components/NotFound.vue';
+import RepositoryCard from '@/components/RepositoryCard.vue';
 import SearchingContent from '@/components/SearchingContent.vue';
 
 export default {
   name: 'Home',
   components: {
+    InitialContent,
     NotFound,
     RepositoryCard,
     SearchingContent,
   },
   data() {
     return {
-      repos: [],
       loading: false,
       timeout: null,
       selectedRepo: {},
@@ -78,7 +63,7 @@ export default {
       this.timeout = setTimeout(() => {
         githubService.search(query)
           .then(({ data }) => {
-            this.repos = data.items;
+            this.setRepos(data.items);
           })
           .finally(() => {
             this.loading = false;
@@ -88,6 +73,10 @@ export default {
     onClear() {
       this.search = '';
     },
+    ...mapActions('github', ['setRepos']),
+  },
+  computed: {
+    ...mapGetters('github', ['repos']),
   },
   watch: {
     search(val) {
@@ -103,11 +92,5 @@ export default {
   .cards-container {
     overflow-y: scroll;
     max-height: 420px;
-  }
-  .initial-content {
-    height: 430px;
-  }
-  .searching-content {
-    height: 430px;
   }
 </style>
