@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'SearchingContent',
-  }
+export default {
+  name: 'SearchingContent',
+};
 </script>
 
 <style>
