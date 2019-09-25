@@ -5,7 +5,7 @@
         size="56"
         indeterminate
       />
-      <span class="headline mt-3">Buscando repositórios...</span>
+      <span class="headline mt-3 text-center">Buscando repositórios...</span>
     </v-layout>
   </v-container>
 </template>
