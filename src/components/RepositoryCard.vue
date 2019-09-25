@@ -13,13 +13,18 @@
 
         <v-layout column>
           <v-layout>
-            <a class="title repo-name" :href="repo.html_url">{{ repo.full_name }}</a>
+            <a
+              :class="{'title': $vuetify.breakpoint.mdAndUp, 'repo-name': true}"
+              :href="repo.html_url"
+            >
+              {{ repo.full_name }}
+            </a>
             <v-spacer />
-            <span v-if="repo.language" class="ml-5">
+            <span v-if="repo.language && $vuetify.breakpoint.smAndUp" class="ml-5">
               <v-icon :color="languageColor" size="12">mdi-circle</v-icon>
               {{ repo.language }}
             </span>
-            <span class="ml-3">
+            <span v-if="$vuetify.breakpoint.smAndUp" class="ml-3">
               <v-icon size="12">mdi-star</v-icon>
               {{ repo.stargazers_count }}
             </span>
@@ -34,8 +39,8 @@
       </v-layout>
 
       <!-- Details -->
-      <v-layout column>
-        <v-layout class="mt-3">
+      <v-layout column v-if="$vuetify.breakpoint.mdAndUp">
+        <v-layout :column="$vuetify.breakpoint.smAndDown" class="mt-3">
           <span v-if="repo.license" class="mr-4">{{ repo.license.name }}</span>
           <span class="mr-4">Updated {{ updatedAt }}</span>
         </v-layout>

@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-layout column justify-center align-center>
-      <v-card width="50%" height="550">
+      <v-card :width="$vuetify.breakpoint.mdAndUp ? '70%' : '95%'" height="550">
         <v-card-text>
           <v-text-field
             v-model="search"
@@ -10,7 +10,7 @@
             @click:append="onClear"
             :loading="loading"
             label="Busca"
-            placeholder="Digite o nome do repositório..."
+            placeholder="Procurar repositório..."
           />
 
           <initial-content v-if="repos.length === 0 && search.length < 3" />
