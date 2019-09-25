@@ -12,25 +12,8 @@
             label="Busca"
             placeholder="Digite o nome do repositório..."
           />
-          <v-container
-            v-if="repos.length === 0 && search.length < 3"
-            class="initial-content"
-            fill-height
-          >
-            <v-layout
-              column
-              align-center
-              justify-center
-            >
-              <img
-                width="200" src="@/assets/images/octocat.png"
-                alt="Logo Github"
-              />
-              <span class="mt-3 headline text-center">
-                Busque seus repositórios favoritos do Github digitando o nome no campo acima.
-              </span>
-            </v-layout>
-          </v-container>
+
+          <initial-content v-if="repos.length === 0 && search.length < 3" />
 
           <searching-content v-if="loading" />
 
@@ -52,13 +35,15 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import githubService from '@/services/github-service';
-import RepositoryCard from '@/components/RepositoryCard.vue';
+import InitialContent from '@/components/InitialContent.vue';
 import NotFound from '@/components/NotFound.vue';
+import RepositoryCard from '@/components/RepositoryCard.vue';
 import SearchingContent from '@/components/SearchingContent.vue';
 
 export default {
   name: 'Home',
   components: {
+    InitialContent,
     NotFound,
     RepositoryCard,
     SearchingContent,
@@ -107,11 +92,5 @@ export default {
   .cards-container {
     overflow-y: scroll;
     max-height: 420px;
-  }
-  .initial-content {
-    height: 430px;
-  }
-  .searching-content {
-    height: 430px;
   }
 </style>
