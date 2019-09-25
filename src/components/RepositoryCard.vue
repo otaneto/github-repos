@@ -26,14 +26,14 @@
         <!-- Topics -->
         <v-layout class="mt-3">
           <v-btn
-            class="mr-2 text-lowercase blue--text text--darken-2 elevation-0"
+            class="ml-0 mr-2 text-lowercase blue--text text--darken-2 elevation-0"
             small
             color="blue lighten-5"
           >
             webpack
           </v-btn>
           <v-btn
-            class="mr-2 text-lowercase blue--text text--darken-2 elevation-0"
+            class="ml-0 mr-2 text-lowercase blue--text text--darken-2 elevation-0"
             small
             color="blue lighten-5"
           >
