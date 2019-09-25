@@ -31,9 +31,9 @@
               </span>
             </v-layout>
           </v-container>
-          
+
           <searching-content v-if="loading" />
-          
+
           <div
             :class="{'cards-container': repos.length >= 3}"
             v-if="repos.length > 0 && !loading"
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import githubService from '@/services/github-service';
 import RepositoryCard from '@/components/RepositoryCard.vue';
 import NotFound from '@/components/NotFound.vue';
@@ -64,7 +65,6 @@ export default {
   },
   data() {
     return {
-      repos: [],
       loading: false,
       timeout: null,
       selectedRepo: {},
@@ -78,7 +78,7 @@ export default {
       this.timeout = setTimeout(() => {
         githubService.search(query)
           .then(({ data }) => {
-            this.repos = data.items;
+            this.setRepos(data.items);
           })
           .finally(() => {
             this.loading = false;
@@ -88,6 +88,10 @@ export default {
     onClear() {
       this.search = '';
     },
+    ...mapActions('repos', ['setRepos']),
+  },
+  computed: {
+    ...mapGetters('repos', ['repos']),
   },
   watch: {
     search(val) {
