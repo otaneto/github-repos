@@ -15,6 +15,7 @@ const actions = {
 };
 
 const getters = {
+  languages: state => state.languages,
   repos: state => state.repos,
 };
 

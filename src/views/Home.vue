@@ -21,7 +21,7 @@
             :class="{'cards-container': repos.length >= 3}"
             v-if="repos.length > 0 && !loading"
           >
-            <repository-card v-for="repo in repos" :key="repo.id" />
+            <repository-card v-for="repo in repos" :key="repo.id" :repo="repo" />
           </div>
 
           <not-found v-else-if="repos.length === 0 && search.length > 3 && !loading" />
@@ -73,10 +73,10 @@ export default {
     onClear() {
       this.search = '';
     },
-    ...mapActions('repos', ['setRepos']),
+    ...mapActions('github', ['setRepos']),
   },
   computed: {
-    ...mapGetters('repos', ['repos']),
+    ...mapGetters('github', ['repos']),
   },
   watch: {
     search(val) {
