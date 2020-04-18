@@ -1,6 +1,6 @@
 # github-repos
 
-Demo: https://otaneto-github-repos.netlify.com/
+Demo: https://otaneto-github-repos.netlify.app/
 
 ## Project setup
 ```
